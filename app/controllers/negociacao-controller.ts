@@ -7,6 +7,7 @@ import { logarTempoDeExecucao } from '../decorators/logar-tempo-de-execucao.js';
 import { inspect } from '../decorators/inspect.js';
 import { domInjector } from '../decorators/dom-injector.js';
 import { NegociacoesService } from '../services/negociacoes-service.js';
+import { imprimir } from '../utils/imprimir.js';
 export class NegociacaoController {
     @domInjector('#data')
     private inputData: HTMLInputElement;
@@ -32,23 +33,24 @@ export class NegociacaoController {
             this.inputQuantidade.value,
             this.inputValor.value
         );
-        
-        if(!this.ehDiaUtil(negociacao.data)) {
+
+        if (!this.ehDiaUtil(negociacao.data)) {
             this.mensagemView
                 .update('Apenas negociações em dias úteis são aceitas');
-            return ;
+            return;
         }
 
         this.negociacoes.adiciona(negociacao);
+        imprimir(negociacao, this.negociacoes);
         this.limparFormulario();
         this.atualizaView();
     }
 
-    public importaDados():void {
+    public importaDados(): void {
         this.negociacoesService
             .obterNegociacoesDoDia()
             .then(negociacoesDeHoje => {
-                for(let negocicao of negociacoesDeHoje) {
+                for (let negocicao of negociacoesDeHoje) {
                     this.negociacoes.adiciona(negocicao);
                 }
                 this.negociacoesView.update(this.negociacoes);
