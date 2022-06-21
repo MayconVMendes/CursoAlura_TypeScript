@@ -1,13 +1,11 @@
 import { Imprivel } from "../utils/imprimivel.js";
 
-export class Negociacao extends Imprivel {
+export class Negociacao implements Imprivel {
     constructor(
         private _data: Date,
         public readonly quantidade: number,
         public readonly valor: number
-    ) { 
-        super();
-    }
+    ) { }
 
     public static criaDe(
         dataString: string,

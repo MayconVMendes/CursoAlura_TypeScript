@@ -1,5 +1,3 @@
-export abstract class Imprivel {
-
-    public abstract paraTexto(): string;
-
+export interface Imprivel {
+    paraTexto(): string;
 }
